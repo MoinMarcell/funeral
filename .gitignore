@@ -3,3 +3,6 @@
 *.iml
 /backend/mvnw
 /backend/mvnw.cmd
+/backend/src/main/resources/static/
+/backend/src/main/resources/templates/
+/backend/.mvn/

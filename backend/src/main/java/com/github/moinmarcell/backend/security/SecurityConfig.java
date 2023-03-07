@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .csrfTokenRequestHandler(requestHandler))
                 .httpBasic().and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
                 .and()

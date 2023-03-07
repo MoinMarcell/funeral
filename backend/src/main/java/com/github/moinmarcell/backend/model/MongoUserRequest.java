@@ -1,10 +1,15 @@
 package com.github.moinmarcell.backend.model;
 
+import org.springframework.lang.NonNull;
+
 public record MongoUserRequest(
+        @NonNull
         String firstName,
+        @NonNull
         String lastName,
+        @NonNull
         String email,
-        String password,
-        String role
+        @NonNull
+        String password
 ) {
 }

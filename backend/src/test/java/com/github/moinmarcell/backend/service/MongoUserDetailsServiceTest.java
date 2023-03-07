@@ -3,13 +3,11 @@ package com.github.moinmarcell.backend.service;
 import com.github.moinmarcell.backend.model.MongoUser;
 import com.github.moinmarcell.backend.repository.MongoUserRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 class MongoUserDetailsServiceTest {
 
     MongoUserRepository mongoUserRepository = mock(MongoUserRepository.class);

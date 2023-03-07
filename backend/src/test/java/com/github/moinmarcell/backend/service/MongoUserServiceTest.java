@@ -5,9 +5,12 @@ import com.github.moinmarcell.backend.model.MongoUserRequest;
 import com.github.moinmarcell.backend.model.MongoUserResponse;
 import com.github.moinmarcell.backend.repository.MongoUserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class MongoUserServiceTest {
@@ -51,5 +54,20 @@ class MongoUserServiceTest {
         verify(idService, times(1)).generateId();
         verify(passwordEncoder, times(1)).encode("password");
         assertEquals(expectedUser, actualUser);
+    }
+
+    @Test
+    void createMongoUser_whenUserExist_thenThrowException() {
+        // GIVEN
+        MongoUserRequest userToAdd = new MongoUserRequest(
+                "FirstName",
+                "LastName",
+                "mail@mail.com",
+                "password"
+        );
+        // WHEN
+        when(mongoUserRepository.save(any(MongoUser.class))).thenThrow(new ResponseStatusException(HttpStatus.CONFLICT, "User already exists"));
+        // THEN
+        assertThrows(ResponseStatusException.class, () -> mongoUserService.createMongoUser(userToAdd));
     }
 }

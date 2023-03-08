@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .httpBasic().and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and().build();

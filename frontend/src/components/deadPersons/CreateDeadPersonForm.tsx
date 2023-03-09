@@ -13,33 +13,18 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
         dateOfDeath: '',
         placeOfBirth: '',
         placeOfDeath: '',
-        address: {
-            street: '',
-            houseNumber: '',
-            zipCode: '',
-            city: '',
-            country: ''
-        }
+        street: '',
+        houseNumber: '',
+        zipCode: '',
+        city: '',
+        country: ''
     });
 
     const handleChangeDeadPerson = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
-        const {name, value} = event.target;
-        if (name.startsWith("address.")) {
-            const addressField = name.split(".")[1];
-            setDeadPerson({
-                ...deadPerson,
-                address: {
-                    ...deadPerson.address,
-                    [addressField]: value
-                }
-            });
-        } else {
-            setDeadPerson({
-                ...deadPerson,
-                [name]: value
-            });
-        }
+        setDeadPerson({
+            ...deadPerson,
+            [event.target.name]: event.target.value
+        })
     }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -52,13 +37,11 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
             dateOfDeath: '',
             placeOfBirth: '',
             placeOfDeath: '',
-            address: {
-                street: '',
-                houseNumber: '',
-                zipCode: '',
-                city: '',
-                country: ''
-            }
+            street: '',
+            houseNumber: '',
+            zipCode: '',
+            city: '',
+            country: ''
         })
     }
 
@@ -96,27 +79,27 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
             </label>
             <label htmlFor="street">
                 Street
-                <input type="text" name="street" id="street" value={deadPerson.address.street}
+                <input type="text" name="street" id="street" value={deadPerson.street}
                        onChange={handleChangeDeadPerson}/>
             </label>
             <label htmlFor="houseNumber">
                 House Number
-                <input type="text" name="houseNumber" id="houseNumber" value={deadPerson.address.houseNumber}
+                <input type="text" name="houseNumber" id="houseNumber" value={deadPerson.houseNumber}
                        onChange={handleChangeDeadPerson}/>
             </label>
             <label htmlFor="zipCode">
                 Zip Code
-                <input type="text" name="zipCode" id="zipCode" value={deadPerson.address.zipCode}
+                <input type="text" name="zipCode" id="zipCode" value={deadPerson.zipCode}
                        onChange={handleChangeDeadPerson}/>
             </label>
             <label htmlFor="city">
                 City
-                <input type="text" name="city" id="city" value={deadPerson.address.city}
+                <input type="text" name="city" id="city" value={deadPerson.city}
                        onChange={handleChangeDeadPerson}/>
             </label>
             <label htmlFor="country">
                 Country
-                <input type="text" name="country" id="country" value={deadPerson.address.country}
+                <input type="text" name="country" id="country" value={deadPerson.country}
                        onChange={handleChangeDeadPerson}/>
             </label>
             <button type="submit">Create</button>

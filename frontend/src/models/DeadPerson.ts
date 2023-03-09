@@ -1,5 +1,3 @@
-import {Address} from "./Address";
-
 export type DeadPerson = {
     id?: string;
     firstName: string;
@@ -8,5 +6,9 @@ export type DeadPerson = {
     dateOfDeath: string;
     placeOfBirth: string;
     placeOfDeath: string;
-    address: Address;
+    street: string;
+    houseNumber: string;
+    zipCode: string;
+    city: string;
+    country: string;
 }

@@ -45,15 +45,29 @@ class DeadPersonControllerTest {
                                   "dateOfDeath": "dateOfDeath",
                                   "placeOfBirth": "placeOfBirth",
                                   "placeOfDeath": "placeOfDeath",
-                                  "address": {
-                                    "street": "street",
-                                    "houseNumber": "houseNumber",
-                                    "zipCode": "zipCode",
-                                    "city": "city",
-                                    "country": "country"
-                                  }
-                                }""")
+                                  "street": "street",
+                                  "houseNumber": "houseNumber",
+                                  "zipCode": "zipCode",
+                                  "city": "city",
+                                  "country": "country"
+                                }
+                                """)
                         .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                          "firstName": "firstName",
+                          "lastName": "lastName",
+                          "dateOfBirth": "dateOfBirth",
+                          "dateOfDeath": "dateOfDeath",
+                          "placeOfBirth": "placeOfBirth",
+                          "placeOfDeath": "placeOfDeath",
+                          "street": "street",
+                          "houseNumber": "houseNumber",
+                          "zipCode": "zipCode",
+                          "city": "city",
+                          "country": "country"
+                        }
+                        """));
     }
 }

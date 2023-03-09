@@ -1,6 +1,5 @@
 package com.github.moinmarcell.backend.service;
 
-import com.github.moinmarcell.backend.model.Address;
 import com.github.moinmarcell.backend.model.DeadPerson;
 import com.github.moinmarcell.backend.model.DeadPersonRequest;
 import com.github.moinmarcell.backend.repository.DeadPersonRepository;
@@ -44,13 +43,12 @@ class DeadPersonServiceTest {
                 "dateOfDeath",
                 "placeOfBirth",
                 "placeOfDeath",
-                new Address(
-                        "street",
-                        "houseNumber",
-                        "zipCode",
-                        "city",
-                        "country"
-                )
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
+
         );
         DeadPersonRequest deadPersonRequest = new DeadPersonRequest(
                 "firstName",
@@ -59,13 +57,11 @@ class DeadPersonServiceTest {
                 "dateOfDeath",
                 "placeOfBirth",
                 "placeOfDeath",
-                new Address(
-                        "street",
-                        "houseNumber",
-                        "zipCode",
-                        "city",
-                        "country"
-                )
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
         );
 
         // when

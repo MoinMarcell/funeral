@@ -33,7 +33,11 @@ public class DeadPersonService {
                 deadPersonRequest.dateOfDeath(),
                 deadPersonRequest.placeOfBirth(),
                 deadPersonRequest.placeOfDeath(),
-                deadPersonRequest.address()
+                deadPersonRequest.street(),
+                deadPersonRequest.houseNumber(),
+                deadPersonRequest.zipCode(),
+                deadPersonRequest.city(),
+                deadPersonRequest.country()
         );
 
         deadPersonRepository.save(deadPersonToSave);

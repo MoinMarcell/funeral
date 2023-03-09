@@ -23,10 +23,23 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
     });
 
     const handleChangeDeadPerson = (event: ChangeEvent<HTMLInputElement>) => {
-        setDeadPerson({
-            ...deadPerson,
-            [event.target.name]: event.target.value
-        });
+        console.log(event.target.value);
+        const {name, value} = event.target;
+        if (name.startsWith("address.")) {
+            const addressField = name.split(".")[1];
+            setDeadPerson({
+                ...deadPerson,
+                address: {
+                    ...deadPerson.address,
+                    [addressField]: value
+                }
+            });
+        } else {
+            setDeadPerson({
+                ...deadPerson,
+                [name]: value
+            });
+        }
     }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

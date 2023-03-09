@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -82,5 +84,42 @@ class DeadPersonServiceTest {
 
         // then
         assertThrows(IllegalArgumentException.class, () -> deadPersonService.createDeadPerson(deadPersonRequest));
+    }
+
+    @Test
+    void getDeadPersonById_whenDeadPersonExist_thenReturnDeadPerson() {
+        // given
+        DeadPerson expected = new DeadPerson(
+                "id",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "dateOfDeath",
+                "placeOfBirth",
+                "placeOfDeath",
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
+
+        );
+
+        // when
+        when(deadPersonRepository.findById("id")).thenReturn(Optional.of(expected));
+        DeadPerson actual = deadPersonService.getDeadPersonById("id");
+
+        // then
+        verify(deadPersonRepository, times(1)).findById("id");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getDeadPersonById_whenDeadPersonNotExist_thenThrowNoSuchElementException() {
+        // given
+        String id = "id";
+
+        // then
+        assertThrows(NoSuchElementException.class, () -> deadPersonService.getDeadPersonById(id));
     }
 }

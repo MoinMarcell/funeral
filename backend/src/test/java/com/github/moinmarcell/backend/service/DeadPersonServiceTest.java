@@ -4,10 +4,10 @@ import com.github.moinmarcell.backend.model.DeadPerson;
 import com.github.moinmarcell.backend.model.DeadPersonRequest;
 import com.github.moinmarcell.backend.repository.DeadPersonRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,12 +78,9 @@ class DeadPersonServiceTest {
     }
 
     @Test
-    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowIllegalArgumentException() {
-        // given
-        DeadPersonRequest deadPersonRequest = null;
-
+    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowResponseStatusException() {
         // then
-        assertThrows(IllegalArgumentException.class, () -> deadPersonService.createDeadPerson(deadPersonRequest));
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.createDeadPerson(null));
     }
 
     @Test
@@ -115,12 +112,12 @@ class DeadPersonServiceTest {
     }
 
     @Test
-    void getDeadPersonById_whenDeadPersonNotExist_thenThrowNoSuchElementException() {
+    void getDeadPersonById_whenDeadPersonNotExist_thenThrowResponseStatusException() {
         // given
         String id = "id";
 
         // then
-        assertThrows(NoSuchElementException.class, () -> deadPersonService.getDeadPersonById(id));
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.getDeadPersonById(id));
     }
 
     @Test
@@ -184,7 +181,7 @@ class DeadPersonServiceTest {
     }
 
     @Test
-    void updateDeadPerson_whenDeadPersonNotExist_thenThrowNoSuchElementException() {
+    void updateDeadPerson_whenDeadPersonNotExist_thenThrowResponseStatusException() {
         // given
         DeadPersonRequest deadPersonRequest = new DeadPersonRequest(
                 "firstName2",
@@ -202,6 +199,6 @@ class DeadPersonServiceTest {
         String id = "id";
 
         // then
-        assertThrows(NoSuchElementException.class, () -> deadPersonService.updateDeadPerson(id, deadPersonRequest));
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.updateDeadPerson(id, deadPersonRequest));
     }
 }

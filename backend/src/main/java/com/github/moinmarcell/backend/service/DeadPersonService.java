@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,12 @@ public class DeadPersonService {
 
     public List<DeadPerson> getAllDeadPersons() {
         return deadPersonRepository.findAll();
+    }
+
+    public DeadPerson getDeadPersonById(String id) {
+        return deadPersonRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Dead Person with id " + id + " not found"));
     }
 
     public DeadPerson createDeadPerson(DeadPersonRequest deadPersonRequest) {

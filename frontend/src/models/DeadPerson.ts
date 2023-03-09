@@ -1,12 +1,14 @@
-import {Address} from "./Address";
-
 export type DeadPerson = {
-    id: string;
+    id?: string;
     firstName: string;
     lastName: string;
     dateOfBirth: string;
     dateOfDeath: string;
     placeOfBirth: string;
     placeOfDeath: string;
-    address: Address;
+    street: string;
+    houseNumber: string;
+    zipCode: string;
+    city: string;
+    country: string;
 }

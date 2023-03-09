@@ -16,6 +16,14 @@ public record DeadPersonRequest(
         @NonNull
         String placeOfDeath,
         @NonNull
-        Address address
+        String street,
+        @NonNull
+        String houseNumber,
+        @NonNull
+        String zipCode,
+        @NonNull
+        String city,
+        @NonNull
+        String country
 ) {
 }

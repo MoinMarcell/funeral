@@ -1,11 +1,10 @@
 package com.github.moinmarcell.backend.controller;
 
 import com.github.moinmarcell.backend.model.DeadPerson;
+import com.github.moinmarcell.backend.model.DeadPersonRequest;
 import com.github.moinmarcell.backend.service.DeadPersonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +18,11 @@ public class DeadPersonController {
     @GetMapping
     public List<DeadPerson> getAllDeadPersons() {
         return deadPersonService.getAllDeadPersons();
+    }
+
+    @PostMapping
+    public DeadPerson createDeadPerson(@RequestBody DeadPersonRequest deadPersonRequest) {
+        return deadPersonService.createDeadPerson(deadPersonRequest);
     }
 
 }

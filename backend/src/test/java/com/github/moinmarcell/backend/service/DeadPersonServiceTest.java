@@ -122,4 +122,86 @@ class DeadPersonServiceTest {
         // then
         assertThrows(NoSuchElementException.class, () -> deadPersonService.getDeadPersonById(id));
     }
+
+    @Test
+    void updateDeadPerson_whenDeadPersonExist_thenUpdateDeadPersonAndReturn() {
+        // given
+        DeadPerson existingDeadPerson = new DeadPerson(
+                "id",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "dateOfDeath",
+                "placeOfBirth",
+                "placeOfDeath",
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
+
+        );
+        deadPersonRepository.save(existingDeadPerson);
+
+        DeadPersonRequest deadPersonRequest = new DeadPersonRequest(
+                "firstName2",
+                "lastName2",
+                "dateOfBirth2",
+                "dateOfDeath2",
+                "placeOfBirth2",
+                "placeOfDeath2",
+                "street2",
+                "houseNumber2",
+                "zipCode2",
+                "city2",
+                "country2"
+        );
+        DeadPerson expected = new DeadPerson(
+                "id",
+                "firstName2",
+                "lastName2",
+                "dateOfBirth2",
+                "dateOfDeath2",
+                "placeOfBirth2",
+                "placeOfDeath2",
+                "street2",
+                "houseNumber2",
+                "zipCode2",
+                "city2",
+                "country2"
+
+        );
+
+        // when
+        when(deadPersonRepository.findById("id")).thenReturn(Optional.of(existingDeadPerson));
+        when(deadPersonRepository.save(existingDeadPerson)).thenReturn(existingDeadPerson);
+        DeadPerson actual = deadPersonService.updateDeadPerson("id", deadPersonRequest);
+
+        // then
+        verify(deadPersonRepository, times(1)).findById("id");
+        verify(deadPersonRepository, times(1)).save(expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void updateDeadPerson_whenDeadPersonNotExist_thenThrowNoSuchElementException() {
+        // given
+        DeadPersonRequest deadPersonRequest = new DeadPersonRequest(
+                "firstName2",
+                "lastName2",
+                "dateOfBirth2",
+                "dateOfDeath2",
+                "placeOfBirth2",
+                "placeOfDeath2",
+                "street2",
+                "houseNumber2",
+                "zipCode2",
+                "city2",
+                "country2"
+        );
+        String id = "id";
+
+        // then
+        assertThrows(NoSuchElementException.class, () -> deadPersonService.updateDeadPerson(id, deadPersonRequest));
+    }
 }

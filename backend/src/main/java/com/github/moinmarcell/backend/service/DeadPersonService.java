@@ -52,4 +52,26 @@ public class DeadPersonService {
         return deadPersonToSave;
     }
 
+    public DeadPerson updateDeadPerson(String id, DeadPersonRequest deadPersonRequest) {
+        DeadPerson deadPerson = getDeadPersonById(id);
+
+        DeadPerson updatedDeadPerson = new DeadPerson(
+                deadPerson.id(),
+                deadPersonRequest.firstName(),
+                deadPersonRequest.lastName(),
+                deadPersonRequest.dateOfBirth(),
+                deadPersonRequest.dateOfDeath(),
+                deadPersonRequest.placeOfBirth(),
+                deadPersonRequest.placeOfDeath(),
+                deadPersonRequest.street(),
+                deadPersonRequest.houseNumber(),
+                deadPersonRequest.zipCode(),
+                deadPersonRequest.city(),
+                deadPersonRequest.country()
+        );
+        deadPersonRepository.save(updatedDeadPerson);
+
+        return updatedDeadPerson;
+    }
+
 }

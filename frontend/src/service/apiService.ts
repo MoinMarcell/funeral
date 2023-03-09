@@ -10,3 +10,7 @@ export async function getAllDeadPersons() {
 export async function createDeadPerson(deadPerson: DeadPerson) {
     return await axios.post(BASE_URI, deadPerson);
 }
+
+export async function getDeadPerson(id: string) {
+    return await axios.get(BASE_URI + "/" + id);
+}

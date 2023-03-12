@@ -3,6 +3,7 @@ import {DeadPersonCard} from "./DeadPersonCard";
 
 type DeadPersonGalleryProps = {
     deadPersons: DeadPerson[];
+    isLoading: boolean;
 }
 
 export const DeadPersonGallery = (props: DeadPersonGalleryProps) => {
@@ -11,7 +12,9 @@ export const DeadPersonGallery = (props: DeadPersonGalleryProps) => {
         return <DeadPersonCard deadPerson={deadPerson} key={deadPerson.id}/>
     });
 
-    const isEmpty: boolean = deadPersonCards.length === 0;
+    const isEmpty: boolean = props.deadPersons.length === 0;
+
+    if (props.isLoading) return <p>Loading...</p>
 
     return (
         <div>

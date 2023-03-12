@@ -1,12 +1,13 @@
 import {DeadPerson} from "../../models/DeadPerson";
 import {ChangeEvent, FormEvent, useState} from "react";
 
-type CreateDeadPersonFormProps = {
-    onAddDeadPerson: (deadPerson: DeadPerson) => void;
+type DeadPersonFormProps = {
+    handleDeadPerson: (deadPerson: DeadPerson) => void;
 }
 
-export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
-    const [deadPerson, setDeadPerson] = useState<DeadPerson>({
+export const DeadPersonForm = (props: DeadPersonFormProps) => {
+
+    const emptyDeadPerson: DeadPerson = {
         firstName: '',
         lastName: '',
         dateOfBirth: '',
@@ -18,7 +19,9 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
         zipCode: '',
         city: '',
         country: ''
-    });
+    }
+
+    const [deadPerson, setDeadPerson] = useState<DeadPerson>(emptyDeadPerson);
 
     const handleChangeDeadPerson = (event: ChangeEvent<HTMLInputElement>) => {
         setDeadPerson({
@@ -29,20 +32,8 @@ export const CreateDeadPersonForm = (props: CreateDeadPersonFormProps) => {
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        props.onAddDeadPerson(deadPerson);
-        setDeadPerson({
-            firstName: '',
-            lastName: '',
-            dateOfBirth: '',
-            dateOfDeath: '',
-            placeOfBirth: '',
-            placeOfDeath: '',
-            street: '',
-            houseNumber: '',
-            zipCode: '',
-            city: '',
-            country: ''
-        })
+        props.handleDeadPerson(deadPerson);
+        setDeadPerson(emptyDeadPerson);
     }
 
     return (

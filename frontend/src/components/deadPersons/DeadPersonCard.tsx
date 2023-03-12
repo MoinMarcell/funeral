@@ -10,7 +10,7 @@ export const DeadPersonCard = (props: DeadPersonCardProps) => {
     const navigate = useNavigate();
 
     function handleDetailsClick() {
-        navigate("/" + props.deadPerson.id);
+        navigate("/dead-persons/" + props.deadPerson.id);
     }
 
     return (

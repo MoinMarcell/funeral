@@ -1,26 +1,16 @@
-import {DeadPerson} from "../../models/DeadPerson";
-import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {getDeadPerson} from "../../service/apiService";
+import useDeadPerson from "../../hooks/useDeadPerson";
 
 export default function DeadPersonDetailsPage() {
 
-    const [deadPerson, setDeadPerson] = useState<DeadPerson | undefined>(undefined);
-
     const params = useParams();
-    const id: string | undefined = params.id;
+    const id: string | undefined = params.id
 
-    useEffect(() => {
-        if (id) {
-            getDeadPerson(id)
-                .then((response) => setDeadPerson(response.data))
-                .catch((error) => console.log(error));
-        }
-    }, [id]);
+    const {deadPerson, loading} = useDeadPerson(id ? id : '');
 
-    if (!deadPerson) {
-        return <div>Loading...</div>
-    }
+    if (loading) return <p>Loading...</p>
+
+    if (!deadPerson) return <p>Dead Person not found</p>
 
     return (
         <div>

@@ -100,7 +100,7 @@ export const DeadPersonForm = (props: DeadPersonFormProps) => {
                 <input type="text" name="country" id="country" value={deadPerson.country}
                        onChange={handleChangeDeadPerson}/>
             </label>
-            <button type="submit">Create</button>
+            <button type="submit">{props.deadPerson ? 'Update' : 'Create'}</button>
         </form>
     );
 

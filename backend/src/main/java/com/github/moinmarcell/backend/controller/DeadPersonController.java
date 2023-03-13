@@ -29,4 +29,9 @@ public class DeadPersonController {
     public DeadPerson getDeadPersonById(@PathVariable String id) {
         return deadPersonService.getDeadPersonById(id);
     }
+
+    @PutMapping("/{id}")
+    public DeadPerson updateDeadPerson(@PathVariable String id, @RequestBody DeadPersonRequest deadPersonRequest) {
+        return deadPersonService.updateDeadPerson(id, deadPersonRequest);
+    }
 }

@@ -14,3 +14,7 @@ export async function createDeadPerson(deadPerson: DeadPerson) {
 export async function getDeadPerson(id: string) {
     return await axios.get(BASE_URI + "/" + id);
 }
+
+export async function updateDeadPerson(id: string, deadPerson: DeadPerson) {
+    return await axios.put(BASE_URI + "/" + id, deadPerson);
+}

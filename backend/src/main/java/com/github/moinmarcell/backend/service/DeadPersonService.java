@@ -4,10 +4,11 @@ import com.github.moinmarcell.backend.model.DeadPerson;
 import com.github.moinmarcell.backend.model.DeadPersonRequest;
 import com.github.moinmarcell.backend.repository.DeadPersonRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +24,13 @@ public class DeadPersonService {
     public DeadPerson getDeadPersonById(String id) {
         return deadPersonRepository
                 .findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Dead Person with id " + id + " not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dead Person not found"));
     }
 
     public DeadPerson createDeadPerson(DeadPersonRequest deadPersonRequest) {
 
         if (deadPersonRequest == null) {
-            throw new IllegalArgumentException("Dead Person must not be null");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dead Person must not be null");
         }
 
         DeadPerson deadPersonToSave = new DeadPerson(
@@ -55,7 +56,7 @@ public class DeadPersonService {
     public DeadPerson updateDeadPerson(String id, DeadPersonRequest deadPersonRequest) {
 
         if (deadPersonRequest == null) {
-            throw new IllegalArgumentException("Dead Person must not be null");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dead Person must not be null");
         }
 
         DeadPerson deadPersonToUpdate = new DeadPerson(

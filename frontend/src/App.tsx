@@ -9,14 +9,15 @@ import EditDeadPerson from "./components/deadPersons/EditDeadPerson";
 
 function App() {
 
-    const {deadPersons, isLoading} = useDeadPersons();
+    const {deadPersons, isLoading, deleteDeadPersonById} = useDeadPersons();
 
     return (
         <Routes>
             <Route path="/" element={<DeadPersonGallery isLoading={isLoading} deadPersons={deadPersons}/>}/>
             <Route path={"/dead-persons"}
                    element={<DeadPersonGallery isLoading={isLoading} deadPersons={deadPersons}/>}/>
-            <Route path={"/dead-persons/:id"} element={<DeadPersonDetailsPage/>}/>
+            <Route path={"/dead-persons/:id"}
+                   element={<DeadPersonDetailsPage deleteDeadPersonById={deleteDeadPersonById}/>}/>
             <Route path={"/dead-persons/add"} element={<AddDeadPerson/>}/>
             <Route path={"/dead-persons/edit/:id"} element={<EditDeadPerson/>}/>
         </Routes>

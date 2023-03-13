@@ -78,4 +78,8 @@ public class DeadPersonService {
 
         return deadPersonToUpdate;
     }
+
+    public void deleteDeadPerson(String id) {
+        deadPersonRepository.deleteById(id);
+    }
 }

@@ -1,7 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
 import useDeadPerson from "../../hooks/useDeadPerson";
 
-export default function DeadPersonDetailsPage() {
+type DeadPersonDetailsPageProps = {
+    deleteDeadPersonById: (id: string) => void,
+}
+
+export default function DeadPersonDetailsPage(props: DeadPersonDetailsPageProps) {
 
     const navigate = useNavigate();
 
@@ -16,6 +20,13 @@ export default function DeadPersonDetailsPage() {
 
     function handleEditClick() {
         if (deadPerson) navigate("/dead-persons/edit/" + deadPerson.id);
+    }
+
+    function handleDeleteClick() {
+        if (id) {
+            props.deleteDeadPersonById(id);
+            navigate("/dead-persons");
+        }
     }
 
     return (
@@ -41,6 +52,7 @@ export default function DeadPersonDetailsPage() {
                 <p>Country: {deadPerson.country}</p>
             </div>
             <button onClick={handleEditClick}>Edit</button>
+            <button onClick={handleDeleteClick}>Delete</button>
         </div>
     );
 }

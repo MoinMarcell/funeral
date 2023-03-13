@@ -34,4 +34,9 @@ public class DeadPersonController {
     public DeadPerson updateDeadPerson(@PathVariable String id, @RequestBody DeadPersonRequest deadPersonRequest) {
         return deadPersonService.updateDeadPerson(id, deadPersonRequest);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteDeadPerson(@PathVariable String id) {
+        deadPersonService.deleteDeadPerson(id);
+    }
 }

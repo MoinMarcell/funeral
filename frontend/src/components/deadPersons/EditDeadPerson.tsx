@@ -11,7 +11,15 @@ export default function EditDeadPerson() {
     const params = useParams();
     const id: string | undefined = params.id;
 
-    const {deadPerson} = useDeadPerson(id ? id : '');
+    const {deadPerson, loading} = useDeadPerson(id ? id : '');
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    if (!deadPerson) {
+        return <p>Dead Person not found</p>
+    }
 
     function handleDeadPerson(deadPerson: DeadPerson) {
         if (!id) return <p>Dead Person not found</p>

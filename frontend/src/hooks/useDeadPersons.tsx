@@ -1,4 +1,4 @@
-import {getAllDeadPersons} from "../service/apiService";
+import {deleteDeadPerson, getAllDeadPersons} from "../service/apiService";
 import {useEffect, useState} from "react";
 import {DeadPerson} from "../models/DeadPerson";
 
@@ -21,6 +21,16 @@ export default function useDeadPersons() {
             });
     }, []);
 
-    return {deadPersons, isLoading, error};
+    function deleteDeadPersonById(id: string) {
+        deleteDeadPerson(id)
+            .then(() => {
+                setDeadPersons(deadPersons.filter((deadPerson) => deadPerson.id !== id));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    return {deadPersons, isLoading, error, deleteDeadPersonById};
 
 }

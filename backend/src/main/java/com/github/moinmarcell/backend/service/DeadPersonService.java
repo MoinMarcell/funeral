@@ -52,4 +52,29 @@ public class DeadPersonService {
         return deadPersonToSave;
     }
 
+    public DeadPerson updateDeadPerson(String id, DeadPersonRequest deadPersonRequest) {
+
+        if (deadPersonRequest == null) {
+            throw new IllegalArgumentException("Dead Person must not be null");
+        }
+
+        DeadPerson deadPersonToUpdate = new DeadPerson(
+                id,
+                deadPersonRequest.firstName(),
+                deadPersonRequest.lastName(),
+                deadPersonRequest.dateOfBirth(),
+                deadPersonRequest.dateOfDeath(),
+                deadPersonRequest.placeOfBirth(),
+                deadPersonRequest.placeOfDeath(),
+                deadPersonRequest.street(),
+                deadPersonRequest.houseNumber(),
+                deadPersonRequest.zipCode(),
+                deadPersonRequest.city(),
+                deadPersonRequest.country()
+        );
+
+        deadPersonRepository.save(deadPersonToUpdate);
+
+        return deadPersonToUpdate;
+    }
 }

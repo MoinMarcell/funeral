@@ -78,7 +78,7 @@ class DeadPersonServiceTest {
     }
 
     @Test
-    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowIllegalArgumentException() {
+    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowResponseStatusException() {
         // then
         assertThrows(ResponseStatusException.class, () -> deadPersonService.createDeadPerson(null));
     }

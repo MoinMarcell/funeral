@@ -1,7 +1,9 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useDeadPerson from "../../hooks/useDeadPerson";
 
 export default function DeadPersonDetailsPage() {
+
+    const navigate = useNavigate();
 
     const params = useParams();
     const id: string | undefined = params.id
@@ -11,6 +13,10 @@ export default function DeadPersonDetailsPage() {
     if (loading) return <p>Loading...</p>
 
     if (!deadPerson) return <p>Dead Person not found</p>
+
+    function handleEditClick() {
+        if (deadPerson) navigate("/dead-persons/edit/" + deadPerson.id);
+    }
 
     return (
         <div>
@@ -34,6 +40,7 @@ export default function DeadPersonDetailsPage() {
                 <p>City: {deadPerson.city}</p>
                 <p>Country: {deadPerson.country}</p>
             </div>
+            <button onClick={handleEditClick}>Edit</button>
         </div>
     );
 }

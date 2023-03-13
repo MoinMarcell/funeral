@@ -180,4 +180,34 @@ class DeadPersonControllerTest {
                         }
                         """));
     }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
+    void deleteDeadPerson_whenDeadPersonExist_thenExpectStatusOk() throws Exception {
+        MvcResult result = mockMvc.perform(post("/api/dead-persons")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "firstName": "firstName",
+                                  "lastName": "lastName",
+                                  "dateOfBirth": "dateOfBirth",
+                                  "dateOfDeath": "dateOfDeath",
+                                  "placeOfBirth": "placeOfBirth",
+                                  "placeOfDeath": "placeOfDeath",
+                                  "street": "street",
+                                  "houseNumber": "houseNumber",
+                                  "zipCode": "zipCode",
+                                  "city": "city",
+                                  "country": "country"
+                                }
+                                """)
+                        .with(csrf()))
+                .andReturn();
+        String jsonObj = result.getResponse().getContentAsString();
+        DeadPerson deadPerson = objectMapper.readValue(jsonObj, DeadPerson.class);
+
+        mockMvc.perform(delete("/api/dead-persons/" + deadPerson.id()).with(csrf()))
+                .andExpect(status().isOk());
+    }
 }

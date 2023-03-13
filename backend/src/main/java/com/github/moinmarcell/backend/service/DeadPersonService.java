@@ -78,4 +78,12 @@ public class DeadPersonService {
 
         return deadPersonToUpdate;
     }
+
+    public void deleteDeadPerson(String id) {
+        try {
+            deadPersonRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Dead Person not found");
+        }
+    }
 }

@@ -187,4 +187,31 @@ class DeadPersonServiceTest {
         // then
         assertThrows(ResponseStatusException.class, () -> deadPersonService.updateDeadPerson("id", deadPersonRequest));
     }
+
+    @Test
+    void deleteDeadPerson_whenDeadPersonExist_thenDeleteDeadPersonAndReturnNothing() {
+        // given
+        DeadPerson deadPerson = new DeadPerson(
+                "id",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "dateOfDeath",
+                "placeOfBirth",
+                "placeOfDeath",
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
+
+        );
+        deadPersonRepository.save(deadPerson);
+
+        // when
+        deadPersonService.deleteDeadPerson("id");
+
+        // then
+        verify(deadPersonRepository, times(1)).deleteById("id");
+    }
 }

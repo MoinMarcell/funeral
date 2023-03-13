@@ -41,6 +41,7 @@ export default function DeadPersonDetailsPage() {
                 <p>Country: {deadPerson.country}</p>
             </div>
             <button onClick={handleEditClick}>Edit</button>
+            <button>Delete</button>
         </div>
     );
 }

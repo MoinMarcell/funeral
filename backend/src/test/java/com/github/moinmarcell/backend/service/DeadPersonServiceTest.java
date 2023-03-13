@@ -4,10 +4,10 @@ import com.github.moinmarcell.backend.model.DeadPerson;
 import com.github.moinmarcell.backend.model.DeadPersonRequest;
 import com.github.moinmarcell.backend.repository.DeadPersonRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,12 +78,9 @@ class DeadPersonServiceTest {
     }
 
     @Test
-    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowIllegalArgumentException() {
-        // given
-        DeadPersonRequest deadPersonRequest = null;
-
+    void createDeadPerson_whenDeadPersonRequestIsNull_thenThrowResponseStatusException() {
         // then
-        assertThrows(IllegalArgumentException.class, () -> deadPersonService.createDeadPerson(deadPersonRequest));
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.createDeadPerson(null));
     }
 
     @Test
@@ -120,6 +117,74 @@ class DeadPersonServiceTest {
         String id = "id";
 
         // then
-        assertThrows(NoSuchElementException.class, () -> deadPersonService.getDeadPersonById(id));
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.getDeadPersonById(id));
+    }
+
+    @Test
+    void updateDeadPerson_whenDeadPersonExist_thenUpdateDeadPersonAndReturn() {
+        // given
+        DeadPerson deadPerson = new DeadPerson(
+                "id",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "dateOfDeath",
+                "placeOfBirth",
+                "placeOfDeath",
+                "street",
+                "houseNumber",
+                "zipCode",
+                "city",
+                "country"
+
+        );
+        deadPersonRepository.save(deadPerson);
+
+        DeadPersonRequest deadPersonRequest = new DeadPersonRequest(
+                "firstName2",
+                "lastName2",
+                "dateOfBirth2",
+                "dateOfDeath2",
+                "placeOfBirth2",
+                "placeOfDeath2",
+                "street2",
+                "houseNumber2",
+                "zipCode2",
+                "city2",
+                "country2"
+        );
+
+        DeadPerson expected = new DeadPerson(
+                "id",
+                "firstName2",
+                "lastName2",
+                "dateOfBirth2",
+                "dateOfDeath2",
+                "placeOfBirth2",
+                "placeOfDeath2",
+                "street2",
+                "houseNumber2",
+                "zipCode2",
+                "city2",
+                "country2"
+
+        );
+
+        // when
+        when(deadPersonRepository.save(deadPerson)).thenReturn(deadPerson);
+        DeadPerson actual = deadPersonService.updateDeadPerson("id", deadPersonRequest);
+
+        // then
+        verify(deadPersonRepository, times(1)).save(expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void updateDeadPerson_whenDeadPersonNotExist_thenThrowNoSuchElementException() {
+        // given
+        DeadPersonRequest deadPersonRequest = null;
+
+        // then
+        assertThrows(ResponseStatusException.class, () -> deadPersonService.updateDeadPerson("id", deadPersonRequest));
     }
 }

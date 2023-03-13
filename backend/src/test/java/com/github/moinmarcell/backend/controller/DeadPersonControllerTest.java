@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -79,6 +78,14 @@ class DeadPersonControllerTest {
     @Test
     @DirtiesContext
     @WithMockUser
+    void createDeadPerson_whenSendingRequestWithMissingField_thenExpectStatusBadRequest() throws Exception {
+        mockMvc.perform(post("/api/dead-persons").with(csrf()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
     void getDeadPersonById_whenDeadPersonExist_thenReturnDeadPersonAndStatusOk() throws Exception {
         MvcResult result = mockMvc.perform(post("/api/dead-persons")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -103,5 +110,74 @@ class DeadPersonControllerTest {
         DeadPerson deadPerson = objectMapper.readValue(jsonObj, DeadPerson.class);
         mockMvc.perform(get("/api/dead-persons/" + deadPerson.id()).with(csrf()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
+    void getDeadPersonById_whenDeadPersonNotExist_thenExpectStatusNotFound() throws Exception {
+        mockMvc.perform(get("/api/dead-persons/1").with(csrf()))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
+    void updateDeadPerson_whenDeadPersonExist_thenExpectStatusOkAndReturnUpdatedDeadPerson() throws Exception {
+        MvcResult result = mockMvc.perform(post("/api/dead-persons")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "firstName": "firstName",
+                                  "lastName": "lastName",
+                                  "dateOfBirth": "dateOfBirth",
+                                  "dateOfDeath": "dateOfDeath",
+                                  "placeOfBirth": "placeOfBirth",
+                                  "placeOfDeath": "placeOfDeath",
+                                  "street": "street",
+                                  "houseNumber": "houseNumber",
+                                  "zipCode": "zipCode",
+                                  "city": "city",
+                                  "country": "country"
+                                }
+                                """)
+                        .with(csrf()))
+                .andReturn();
+        String jsonObj = result.getResponse().getContentAsString();
+        DeadPerson deadPerson = objectMapper.readValue(jsonObj, DeadPerson.class);
+        mockMvc.perform(put("/api/dead-persons/" + deadPerson.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "firstName": "firstName2",
+                                  "lastName": "lastName2",
+                                  "dateOfBirth": "dateOfBirth",
+                                  "dateOfDeath": "dateOfDeath",
+                                  "placeOfBirth": "placeOfBirth",
+                                  "placeOfDeath": "placeOfDeath",
+                                  "street": "street",
+                                  "houseNumber": "houseNumber",
+                                  "zipCode": "zipCode",
+                                  "city": "city",
+                                  "country": "country"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                          "firstName": "firstName2",
+                          "lastName": "lastName2",
+                          "dateOfBirth": "dateOfBirth",
+                          "dateOfDeath": "dateOfDeath",
+                          "placeOfBirth": "placeOfBirth",
+                          "placeOfDeath": "placeOfDeath",
+                          "street": "street",
+                          "houseNumber": "houseNumber",
+                          "zipCode": "zipCode",
+                          "city": "city",
+                          "country": "country"
+                        }
+                        """));
     }
 }

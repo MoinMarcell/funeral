@@ -5,6 +5,7 @@ import DeadPersonDetailsPage from "./components/deadPersons/DeadPersonDetailsPag
 import {DeadPersonGallery} from "./components/deadPersons/DeadPersonGallery";
 import useDeadPersons from "./hooks/useDeadPersons";
 import AddDeadPerson from "./components/deadPersons/AddDeadPerson";
+import EditDeadPerson from "./components/deadPersons/EditDeadPerson";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
                    element={<DeadPersonGallery isLoading={isLoading} deadPersons={deadPersons}/>}/>
             <Route path={"/dead-persons/:id"} element={<DeadPersonDetailsPage/>}/>
             <Route path={"/dead-persons/add"} element={<AddDeadPerson/>}/>
+            <Route path={"/dead-persons/edit/:id"} element={<EditDeadPerson/>}/>
         </Routes>
     );
 }

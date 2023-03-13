@@ -1,8 +1,9 @@
 import {DeadPerson} from "../../models/DeadPerson";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 
 type DeadPersonFormProps = {
     handleDeadPerson: (deadPerson: DeadPerson) => void;
+    deadPerson?: DeadPerson;
 }
 
 export const DeadPersonForm = (props: DeadPersonFormProps) => {
@@ -22,6 +23,12 @@ export const DeadPersonForm = (props: DeadPersonFormProps) => {
     }
 
     const [deadPerson, setDeadPerson] = useState<DeadPerson>(emptyDeadPerson);
+
+    useEffect(() => {
+        if (props.deadPerson) {
+            setDeadPerson(props.deadPerson);
+        }
+    }, [props.deadPerson]);
 
     const handleChangeDeadPerson = (event: ChangeEvent<HTMLInputElement>) => {
         setDeadPerson({
